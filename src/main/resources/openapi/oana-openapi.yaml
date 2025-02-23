@@ -1,0 +1,119 @@
+openapi: 3.0.2
+info:
+    title: Oana
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /users:
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Users'
+                        examples:
+                            put_user:
+                                value:
+                                    id: 6b50df0e-5998-4a61-95f2-f0188f7a854a
+                                    userTypeId: 1
+                required: true
+            responses:
+                '201':
+                    content:
+                        application/json: {}
+                    description: User created
+                '400':
+                    description: Bad Request
+                '401':
+                    description: Unauthorized
+                '403':
+                    description: Forbidden
+            operationId: putUsers
+    '/users/{userId}':
+        summary: Get single user
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Users'
+                            examples:
+                                get_user:
+                                    value:
+                                        id: 6b50df0e-5998-4a61-95f2-f0188f7a854a
+                                        user_type: 1
+                    description: Success message
+                '400':
+                    $ref: '#/components/responses/user_400_error_response'
+                '404':
+                    $ref: '#/components/responses/user_404_error_response'
+            operationId: getUser
+            summary: Get Signe User
+        parameters:
+            -
+                name: userId
+                in: path
+                required: true
+components:
+    schemas:
+        Users:
+            title: Root Type for Users
+            description: ''
+            type: object
+            properties:
+                id:
+                    type: string
+                user_type:
+                    format: int32
+                    type: integer
+            example:
+                id: 6b50df0e-5998-4a61-95f2-f0188f7a920a
+                user_type: 1
+        error_response:
+            title: Root Type for error_response
+            description: ''
+            type: object
+            properties:
+                code:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: '400'
+                message: Bad request
+        test:
+            title: Root Type for test
+            description: ''
+            type: object
+            properties:
+                id:
+                    type: string
+                test:
+                    type: string
+            example:
+                id: id
+                test: test
+    responses:
+        user_404_error_response:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/error_response'
+                    examples:
+                        404_user_not_found:
+                            value:
+                                code: '404'
+                                message: User not found!
+            description: ''
+        user_400_error_response:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/error_response'
+                    examples:
+                        400_user_bad_request:
+                            value:
+                                code: '400'
+                                message: Bad request
+            description: ''

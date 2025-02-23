@@ -1,0 +1,99 @@
+openapi: 3.0.2
+info:
+    title: New API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /users:
+        summary: Path used to manage the list of users.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `users` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/users'
+                    description: Successful response - returns an array of `users` entities.
+            operationId: getusers
+            summary: List All users
+            description: Gets a list of all `users` entities.
+        post:
+            requestBody:
+                description: A new `users` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/users'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createusers
+            summary: Create a users
+            description: Creates a new instance of a `users`.
+    '/users/{usersId}':
+        summary: Path used to manage a single users.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `users`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/users'
+                    description: Successful response - returns a single `users`.
+            operationId: getusers
+            summary: Get a users
+            description: Gets the details of a single instance of a `users`.
+        put:
+            requestBody:
+                description: Updated `users` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/users'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateusers
+            summary: Update a users
+            description: Updates an existing `users`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteusers
+            summary: Delete a users
+            description: Deletes an existing `users`.
+        parameters:
+            -
+                name: usersId
+                description: A unique identifier for a `users`.
+                schema:
+                    type: string
+                in: path
+                required: true
+components:
+    schemas:
+        users:
+            title: Root Type for users
+            description: ''
+            type: object
+            properties:
+                id:
+                    type: string
+                user_type:
+                    format: int32
+                    type: integer
+            example:
+                id: 6b50df0e-5998-4a61-95f2-f0188f7a854a
+                user_type: 1
